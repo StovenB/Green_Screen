@@ -6,10 +6,12 @@ A static web page that allows users to combine images from their computers with 
 
 # Getting Started
 1. Clone the repository onto your machine
-   '''bash
+
+   ```bash
    git clone https://github.com/StovenB/Green_Screen.git
 
-2. Open the HTML file:
-   '''bash
+3. Open the HTML file:
+
+   ```bash
    cd Green_Screen
    start index.html
