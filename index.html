@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        h1{
+  color: green;
+}
+canvas {
+  border: 1px solid black;
+}
+      </style>
+    </head>
+    <body>
+<script src="http://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js">
+  var fgimg=null;
+var bgimg=null;
+var canvas1=null;
+var canvas2=null;
+
+
+function loadForegroundImage(){
+   var input = document.getElementById("finput");
+  canvas1 = document.getElementById("cancan");
+  fgimg = new SimpleImage(input);
+  fgimg.drawTo(canvas1);
+}
+function loadBackgroundImage(){
+  var input = document.getElementById("binput");
+  canvas2 = document.getElementById("can2");
+  bgimg = new SimpleImage(input);
+  bgimg.drawTo(canvas2);
+}
+function doGreenScreen(){
+  var output = new 
+  SimpleImage(fgimg.getWidth(),fgimg.getHeight());
+  if (fgimg == null || !fgimg.complete()){
+    alert("Image has not been loaded");
+    return;
+  }
+  if (bgimg == null || !bgimg.complete()){
+    alert("Image has not been loaded");
+    return;
+  }
+clearCanvas();
+  for (var pixel of fgimg.values()){
+    if (pixel.getGreen() > pixel.getRed() + pixel.getBlue()){
+      var x = pixel.getX();
+      var y = pixel.getY();
+      var bgpixel = bgimg.getPixel(x,y);
+      output.setPixel(x,y,bgpixel);
+    }
+    else{
+      output.setPixel(pixel.getX(), pixel.getY(),pixel);
+    }
+  }
+  canvas1 = document.getElementById("cancan");
+      output.drawTo(canvas1);
+}
+function clearCanvas(){
+  var fgcxt = cancan.getContext("2d");
+  var bgcxt = can2.getContext("2d");
+  fgcxt.clearRect(0,0,cancan.width,cancan.height);
+  bgcxt.clearRect(0,0,can2.width,can2.height);
+}
+</script>
+<h1>
+  Green Screen </h1>
+<p>
+<canvas id="cancan"> 
+</canvas>
+ <canvas id="can2">
+  </canvas>
+</p>
+<p>Foreground
+<input type="file" multiple="false"
+       accept="image/*" id="finput"
+       onchange="loadForegroundImage()" />
+Background
+<input type="file" multiple="false"
+       accept="image/*" id="binput"
+       onchange="loadBackgroundImage()" />
+</p>
+<p>
+  <input type="button" value="Create Composite"
+         onclick="doGreenScreen()"/>
+  <input type="button" value="Clear Canvases"
+         onclick="clearCanvas()"/>
+</p>
+      </body>
+    </html>
